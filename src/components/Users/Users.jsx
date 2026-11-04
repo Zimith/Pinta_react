@@ -13,6 +13,8 @@ const Users = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [hasPrevPage, setHasPrevPage] = useState(false);
+  const [textInput, setTextInput] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
 
   const nextPage = () => {
     if (hasNextPage) {
@@ -31,15 +33,36 @@ const Users = () => {
     setPage(1);
   };
 
+  const sleep = (ml) => new Promise(resolv => setTimeout(resolv, ml));
+
+  const goPage = (e) =>{
+    e.preventDefault();
+
+    const number = Number(textInput);
+
+    if ( number >= 1 && number <= totalPages){
+      setPage(number);
+      setTextInput("")
+    } else{
+        alert("La pagina no esta en el rango pa");
+      }
+  };
+
   const fetchbans = async () => {
+    setIsLoading(true)
     try {
+      
       let response = await fetch(`https://rickandmortyapi.com/api/character/?page=${page}&name=${search}`);
       let json = await response.json();
       
+      
       setBans(json.results || [])
+      setTotalPages(json.info?.pages || 1)
 
       setHasNextPage(Boolean(json.info?.next))
       setHasPrevPage(Boolean(json.info?.prev))
+
+      await sleep(1000)
 
       console.log(JSON.stringify(json));
     } catch (e) {
@@ -79,7 +102,7 @@ const Users = () => {
             {
               bans.map((bans) =>{
                 return(
-                <tr>
+                <tr key={bans.id}>
                   <td>{bans.id}</td>
                   <td>{bans.name}</td>
                   <td>{bans.species}</td>
@@ -92,6 +115,24 @@ const Users = () => {
 
           </tbody>
         </Table>
+        <form onSubmit={goPage}>
+          <button type = "button" onClick={() => setPage(1)} disabled={page === 1 || isLoading}> {"<<"}</button>
+
+          <input 
+          type='number'
+          placeholder={page}
+          value={textInput}
+          onChange={(e) => setTextInput(e.target.value)}
+          style={{width: "60px", textAlign: "center"}}/>
+          <span>/ {totalPages} </span>
+
+          <button type="submit" disabled={isLoading}>Ir</button>
+
+          <button type="button" onClick={() => setPage(totalPages)} disabled={page === totalPages || isLoading}>
+            {">>"}
+          </button>
+
+        </form>
         {hasPrevPage ? <button onClick={prevPage}>Anterior</button> : <></>}
         {hasNextPage ? <button onClick={nextPage}>Siguiente</button> : <></>}
         
