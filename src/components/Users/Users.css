@@ -1,7 +1,142 @@
-.spinner{
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 100vh;
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.users-page {
+  width: min(100% - 32px, 1000px);
+  margin: 48px auto;
+}
+
+.users-table-card {
+  overflow: hidden;
+  border: 1px solid #eeebe4;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(243, 119, 3, 0.61);
+}
+
+.table-style {
+  margin-bottom: 0;
+  color: #FF7A00;
+  vertical-align: middle;
+}
+
+.table-style thead th {
+  padding: 16px 20px;
+  border: 0;
+  background: #FF7A00;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.table-style tbody td {
+  padding: 12px 20px;
+  border-color: #f2f0ed;
+}
+
+.table-style tbody tr:nth-of-type(odd) > * {
+  --bs-table-bg-type: #faf8f7;
+}
+
+.table-style tbody tr:hover > * {
+  --bs-table-bg-state: #f6f2ed;
+  color: #FF7A00;
+}
+
+.user-avatar {
+  display: block;
+  width: 56px;
+  height: 56px;
+  border: 3px solid #fff;
+  border-radius: 14px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(201, 117, 8, 0.16);
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.pagination-controls button {
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid #FF7A00;
+  border-radius: 10px;
+  background: #FF7A00;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  background: #FFB000;
+}
+
+.pagination-controls button:disabled {
+  border-color: #d7e2dc;
+  background: #e8efeb;
+  color: #FF7A00;
+  cursor: not-allowed;
+}
+
+.pagination-controls input {
+  width: 68px;
+  min-height: 40px;
+  padding: 0 8px;
+  border: 1px solid #e2ddd5;
+  border-radius: 10px;
+  color: black;
+  font: inherit;
+  text-align: center;
+}
+
+.pagination-controls input:focus {
+  border-color: #FFB000;
+  outline: 3px solid rgb(39 107 87 / 15%);
+}
+
+.pagination-count {
+  color: black;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  .users-page {
+    width: calc(100% - 20px);
+    margin: 24px auto;
+  }
+
+  .table-style thead th,
+  .table-style tbody td {
+    padding: 12px;
+  }
+
+  .user-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .pagination-controls {
+    gap: 7px;
+  }
+
+  .pagination-controls button {
+    padding: 0 11px;
+  }
 }

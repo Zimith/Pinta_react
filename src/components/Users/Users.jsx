@@ -87,9 +87,10 @@ const Users = () => {
             size={25} 
           />
         </div>
-       : 
-      <div>
-        <Table striped>
+      : 
+      <main className="users-page">
+        <div className="users-table-card">
+        <Table className="table-style" hover responsive>
           <thead>
             <tr>
               <th>#</th>
@@ -106,8 +107,7 @@ const Users = () => {
                   <td>{bans.id}</td>
                   <td>{bans.name}</td>
                   <td>{bans.species}</td>
-                  <td><img src={bans.image}   
-                  alt={bans.name} /></td>
+                  <td><img className="user-avatar" src={bans.image} alt={bans.name} /></td>
                 </tr>
                 );
               })
@@ -115,28 +115,36 @@ const Users = () => {
 
           </tbody>
         </Table>
-        <form onSubmit={goPage}>
-          <button type = "button" onClick={() => setPage(1)} disabled={page === 1 || isLoading}> {"<<"}</button>
+        </div>
+        <div className="pagination-controls">
+          <button type="button" onClick={() => setPage(1)} disabled={page === 1 || isLoading}>
+            {"<<"}
+          </button>
 
-          <input 
-          type='number'
-          placeholder={page}
-          value={textInput}
-          onChange={(e) => setTextInput(e.target.value)}
-          style={{width: "60px", textAlign: "center"}}/>
-          <span>/ {totalPages} </span>
+          <form onSubmit={goPage} className="page-jump-form">
+            <input
+              type="number"
+              min="1"
+              max={totalPages}
+              aria-label="Ir a la página"
+              placeholder={page}
+              value={textInput}
+              onChange={(e) => setTextInput(e.target.value)}
+            />
+            <span className="pagination-count">/ {totalPages}</span>
 
-          <button type="submit" disabled={isLoading}>Ir</button>
+            <button type="submit" disabled={isLoading}>Ir</button>
+          </form>
 
           <button type="button" onClick={() => setPage(totalPages)} disabled={page === totalPages || isLoading}>
             {">>"}
           </button>
 
-        </form>
-        {hasPrevPage ? <button onClick={prevPage}>Anterior</button> : <></>}
-        {hasNextPage ? <button onClick={nextPage}>Siguiente</button> : <></>}
+          {hasPrevPage && <button type="button" onClick={prevPage}>Anterior</button>}
+          {hasNextPage && <button type="button" onClick={nextPage}>Siguiente</button>}
+        </div>
         
-      </div>
+      </main>
         }
     </>
   );
